@@ -19,7 +19,7 @@ This tool builds an automated ETL pipeline that:
 * **Frontend:** Streamlit
 
 ## 📸 Screenshots
-*(Qui caricherai uno screenshot della tua dashboard dopo aver fatto il push)*
+![Dashboard Preview](img/dashboard_preview.png)
 
 ## 📦 How to Run
 1. Clone the repo
