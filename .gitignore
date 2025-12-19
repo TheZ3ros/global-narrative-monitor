@@ -1,0 +1,18 @@
+# Ignora il database vettoriale (è pesante e si rigenera)
+chroma_db/
+
+# Ignora i file compilati da Python (inutili)
+__pycache__/
+*.pyc
+
+# Ignora i dati scaricati (non caricare mai dati/CSV su GitHub!)
+*.csv
+
+# Ignora le configurazioni locali del tuo editor
+.vscode/
+
+# Ignora file di log o errori
+*.log
+
+# Ignora i notebook di test (per ignorare tutti i notebook basta sostituire con *.ipynb)
+*.ipynb
