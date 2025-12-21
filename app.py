@@ -9,7 +9,7 @@ st.set_page_config(page_title="Global Narrative Monitor", layout="wide")
 st.title("🌍 Global Narrative Monitor")
 st.markdown("""
 Questa dashboard utilizza **Vector Embeddings** per cercare notizie basate sul **concetto** e non solo sulle parole chiave.
-Analizza come diverse fonti (CNN, BBC, Al Jazeera) riportano gli stessi eventi.
+Analizza come diverse fonti (NYT, BBC, Al Jazeera) riportano gli stessi eventi.
 """)
 
 # --- FUNZIONI DI BACKEND (Con Caching) ---
@@ -73,7 +73,7 @@ if st.button("Analizza Narrazione"):
                 with st.container():
                     # Intestazione con Fonte
                     emoji_fonte = "📰"
-                    if "CNN" in source: emoji_fonte = "🇺🇸"
+                    if "NYT" in source: emoji_fonte = "🇺🇸"
                     elif "BBC" in source: emoji_fonte = "🇬🇧"
                     elif "Al Jazeera" in source: emoji_fonte = "🇶🇦"
                     

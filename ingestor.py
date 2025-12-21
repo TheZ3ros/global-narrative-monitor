@@ -5,7 +5,7 @@ from datetime import datetime
 # 1. Definiamo le fonti (Useremo RSS feed pubblici)
 # Nota: Alcuni link RSS potrebbero cambiare nel tempo, questi sono solitamente stabili.
 FONTI = {
-    "CNN (US)": "http://rss.cnn.com/rss/edition_world.rss",
+    "NYT (US)": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
     "BBC (UK)": "http://feeds.bbci.co.uk/news/world/rss.xml",
     "Al Jazeera (Middle East)": "https://www.aljazeera.com/xml/rss/all.xml",
 }
