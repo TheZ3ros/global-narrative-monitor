@@ -80,12 +80,20 @@ if st.button("Analizza Narrazione"):
                     st.markdown(f"### {emoji_fonte} {meta['titolo']}")
                     
                     # --- NOVITÀ: VISUALIZZAZIONE SENTIMENT ---
-                    sentiment = meta['sentiment'] # POSITIVE o NEGATIVE
+                    raw_sentiment = meta['sentiment'] # positive, negative or neutral
+                    sentiment = raw_sentiment.lower()
                     score = meta['score']
                     
                     # Colore dinamico
-                    colore = "green" if sentiment == "POSITIVE" else "red"
-                    emoji_mood = "😊" if sentiment == "POSITIVE" else "😠"
+                    if sentiment == "positive":
+                        colore = "green"
+                        emoji_mood = "😊"
+                    elif sentiment == "negative":
+                        colore = "red"
+                        emoji_mood = "😠"
+                    else:
+                        colore = "grey"
+                        emoji_mood = "😐"
                     
                     # Mostriamo un badge
                     st.caption(f"Fonte: **{source}** | Sentiment: :{colore}[**{sentiment} {emoji_mood}**] ({score:.2f})")

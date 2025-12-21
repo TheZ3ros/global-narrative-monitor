@@ -8,6 +8,7 @@ FONTI = {
     "NYT (US)": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
     "BBC (UK)": "http://feeds.bbci.co.uk/news/world/rss.xml",
     "Al Jazeera (Middle East)": "https://www.aljazeera.com/xml/rss/all.xml",
+    "ANSA (IT)": "https://www.ansa.it/sito/ansait_rss.xml"
 }
 
 def scarica_notizie():

@@ -22,7 +22,7 @@ def indicizza_dati():
     # --- NOVITÀ: Inizializziamo il modello di Sentiment Analysis ---
     print("🧠 Caricamento modello Sentiment (potrebbe richiedere un attimo)...")
     # Usiamo un modello standard molto veloce
-    sentiment_pipeline = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+    sentiment_pipeline = pipeline("sentiment-analysis", model="lxyuan/distilbert-base-multilingual-cased-sentiments-student")
 
     # 2. Setup ChromaDB
     client = chromadb.PersistentClient(path="./chroma_db")
