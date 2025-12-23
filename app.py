@@ -39,7 +39,20 @@ except Exception as e:
 # Sidebar laterale per i filtri
 with st.sidebar:
     st.header("⚙️ Impostazioni")
-    n_results = st.slider("Numero di risultati", min_value=1, max_value=10, value=3)
+    n_results = st.slider("Numero di risultati", min_value=1, max_value=20, value=3)
+
+    source_mapping = {
+        "Tutte": None,
+        "NYT": "NYT (US)",
+        "BBC": "BBC (UK)",
+        "Al Jazeera": "Al Jazeera (Middle East)",
+        "ANSA": "ANSA (IT)"
+    }
+
+    #filtro sulle fonti
+    option_label = st.selectbox("Filtra per fonte",options=list(source_mapping))
+    st.write("You selected: ",option_label)
+    real_source_name = source_mapping[option_label]
 
 # Barra di ricerca principale
 query = st.text_input("Di cosa vuoi sapere oggi?", placeholder="Es: Tensioni in medio oriente, Crisi climatica...")
@@ -49,10 +62,15 @@ if st.button("Analizza Narrazione"):
         st.warning("Inserisci un testo per cercare.")
     else:
         with st.spinner('L\'AI sta analizzando i vettori semantici...'):
-            # Eseguiamo la query sul Vector DB
+            # Eseguiamo la query sul Vector DB filtrando sulle fonti
+            db_filter = None
+            if real_source_name:
+                db_filter = {"fonte": real_source_name}
+
             results = collection.query(
                 query_texts=[query],
-                n_results=n_results
+                n_results=n_results,
+                where=db_filter
             )
             
             st.divider()
@@ -68,37 +86,37 @@ if st.button("Analizza Narrazione"):
                 meta = results['metadatas'][0][i]
                 text = results['documents'][0][i]
                 source = meta['fonte']
-                
                 # Creiamo una "Card" visiva per ogni notizia
                 with st.container():
-                    # Intestazione con Fonte
-                    emoji_fonte = "📰"
-                    if "NYT" in source: emoji_fonte = "🇺🇸"
-                    elif "BBC" in source: emoji_fonte = "🇬🇧"
-                    elif "Al Jazeera" in source: emoji_fonte = "🇶🇦"
-                    
-                    st.markdown(f"### {emoji_fonte} {meta['titolo']}")
-                    
-                    # --- NOVITÀ: VISUALIZZAZIONE SENTIMENT ---
-                    raw_sentiment = meta['sentiment'] # positive, negative or neutral
-                    sentiment = raw_sentiment.lower()
-                    score = meta['score']
-                    
-                    # Colore dinamico
-                    if sentiment == "positive":
-                        colore = "green"
-                        emoji_mood = "😊"
-                    elif sentiment == "negative":
-                        colore = "red"
-                        emoji_mood = "😠"
-                    else:
-                        colore = "grey"
-                        emoji_mood = "😐"
-                    
-                    # Mostriamo un badge
-                    st.caption(f"Fonte: **{source}** | Sentiment: :{colore}[**{sentiment} {emoji_mood}**] ({score:.2f})")
-                    # -----------------------------------------
+                        # Intestazione con Fonte
+                        emoji_fonte = "📰"
+                        if "NYT" in source: emoji_fonte = "🇺🇸"
+                        elif "BBC" in source: emoji_fonte = "🇬🇧"
+                        elif "Al Jazeera" in source: emoji_fonte = "🇶🇦"
+                        elif "ANSA" in source: emoji_fonte = "IT"
+                        
+                        st.markdown(f"### {emoji_fonte} {meta['titolo']}")
+                        
+                        # --- NOVITÀ: VISUALIZZAZIONE SENTIMENT ---
+                        raw_sentiment = meta['sentiment'] # positive, negative or neutral
+                        sentiment = raw_sentiment.lower()
+                        score = meta['score']
+                        
+                        # Colore dinamico
+                        if sentiment == "positive":
+                            colore = "green"
+                            emoji_mood = "😊"
+                        elif sentiment == "negative":
+                            colore = "red"
+                            emoji_mood = "😠"
+                        else:
+                            colore = "grey"
+                            emoji_mood = "😐"
+                        
+                        # Mostriamo un badge
+                        st.caption(f"Fonte: **{source}** | Sentiment: :{colore}[**{sentiment} {emoji_mood}**] ({score:.2f})")
+                        # -----------------------------------------
 
-                    st.info(text)
-                    st.markdown(f"[Leggi articolo completo]({meta['link']})")
-                    st.divider()
+                        st.info(text)
+                        st.markdown(f"[Leggi articolo completo]({meta['link']})")
+                        st.divider()
